@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Productivity Savings Calculator</title>
+<style>
+:root{--navy:#0b2447;--blue:#1464f4;--light:#f5f7fb;--card:#fff;--muted:#667085;--line:#d9e0ea;--green:#1f8f5f}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#172033}.wrap{max-width:1120px;margin:30px auto;padding:0 16px}.hero{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:22px;padding:36px}.hero h1{margin:0 0 10px;font-size:42px}.hero p{margin:0;max-width:760px;font-size:18px;color:#e8eef8}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:22px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 10px 28px rgba(16,24,40,.06)}h2{margin:0 0 6px}.sub{margin:0 0 22px;color:var(--muted)}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;font-weight:700;font-size:14px;margin-bottom:7px}.field small{display:block;color:var(--muted);margin-top:5px;line-height:1.35}input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;font-size:16px}.results{background:var(--navy);color:#fff;position:sticky;top:18px}.results .sub{color:#c7d2e3}.big{background:rgba(255,255,255,.1);padding:20px;border-radius:16px}.big span,.metric span{display:block;text-transform:uppercase;font-size:12px;letter-spacing:.05em;color:#c7d2e3;font-weight:700}.big strong{display:block;font-size:46px;margin-top:6px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.metric{background:rgba(255,255,255,.08);padding:15px;border-radius:13px}.metric strong{display:block;font-size:22px;margin-top:5px}.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.presets button{border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}.preset{background:#eaf2ff;color:var(--blue)}.reset{background:#eef1f5;color:#555}.method{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}.formula{background:#eaf2ff;padding:14px;border-radius:12px;color:var(--navy);font-weight:700}.note{margin-top:14px;background:#fff7df;border-left:4px solid #e5a900;padding:13px;border-radius:8px;color:#6c5300;font-size:13px}a{color:var(--blue);font-weight:700}@media(max-width:850px){.grid,.method{grid-template-columns:1fr}.results{position:static}}@media(max-width:600px){.fields,.metrics{grid-template-columns:1fr}.hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero"><h1>How much could AI save your business?</h1><p>Estimate the dollar value of productive time your team could recover by applying AI to repetitive, research-heavy, writing, customer-service, and administrative work.</p></section>
+<section class="grid">
+<div class="card">
+<h2>Your company</h2><p class="sub">Adjust the assumptions below. Results update automatically.</p>
+<div class="fields">
+<div class="field"><label for="employees">Total employees</label><input id="employees" type="number" min="1" value="50"></div>
+<div class="field"><label for="eligiblePercent">Employees in AI-suitable roles</label><input id="eligiblePercent" type="number" min="0" max="100" value="70"><small>Employees doing knowledge, sales, support, marketing, finance, or administrative work.</small></div>
+<div class="field"><label for="adoptionPercent">Expected active AI adoption</label><input id="adoptionPercent" type="number" min="0" max="100" value="70"></div>
+<div class="field"><label for="annualSalary">Average annual salary</label><input id="annualSalary" type="number" min="1" step="1000" value="65000"><small>Use the approximate average salary for employees who would use AI.</small></div>
+<div class="field"><label for="benefitsOverhead">Benefits and payroll overhead</label><select id="benefitsOverhead"><option value="0">Do not include</option><option value="20">20%</option><option value="25">25%</option><option value="30" selected>30% — Typical estimate</option><option value="35">35%</option><option value="40">40%</option></select><small>Adds benefits, payroll taxes, insurance, and other employment costs.</small></div>
+<div class="field"><label for="aiTaskHours">AI-suitable work per employee</label><input id="aiTaskHours" type="number" min="0" max="40" step=".25" value="8"><small>Hours per week spent on work AI could assist.</small></div>
+<div class="field"><label for="productivityGain">Estimated time reduction</label><input id="productivityGain" type="number" min="0" max="80" value="15"><small>15% is a conservative research-based starting point.</small></div>
+<div class="field"><label for="captureRate">Productive reuse of saved time</label><input id="captureRate" type="number" min="0" max="100" value="75"></div>
+<div class="field"><label for="workingWeeks">Working weeks per year</label><input id="workingWeeks" type="number" min="1" max="52" value="48"></div>
+<div class="field"><label for="monthlyLicense">AI cost per active user per month</label><input id="monthlyLicense" type="number" min="0" value="30"></div>
+<div class="field"><label for="annualProgramCost">Other annual AI program costs</label><input id="annualProgramCost" type="number" min="0" step="100" value="5000"><small>Training, setup, consulting, governance, or integration.</small></div>
+</div>
+<div class="presets"><button class="preset" data-preset="conservative">Conservative</button><button class="preset" data-preset="expected">Expected</button><button class="preset" data-preset="strong">Strong adoption</button><button class="reset" id="reset">Reset</button></div>
+</div>
+<aside class="card results">
+<h2>Estimated annual value</h2><p class="sub">Potential productive capacity recovered after estimated AI costs.</p>
+<div class="big"><span>Net annual productivity value</span><strong id="netSavings">$0</strong></div>
+<div class="metrics">
+<div class="metric"><span>Active AI users</span><strong id="activeUsers">0</strong></div>
+<div class="metric"><span>Hours recovered</span><strong id="hoursRecovered">0</strong></div>
+<div class="metric"><span>Gross productivity value</span><strong id="grossValue">$0</strong></div>
+<div class="metric"><span>Estimated AI costs</span><strong id="totalCost">$0</strong></div>
+<div class="metric"><span>Monthly net value</span><strong id="monthlyValue">$0</strong></div>
+<div class="metric"><span>Estimated ROI</span><strong id="roi">0%</strong></div>
+</div>
+</aside>
+</section>
+<section class="method">
+<div class="card"><h2>How the estimate works</h2><p class="sub">The calculator converts annual salary into an hourly employee cost using 2,080 work hours, then adds the selected benefits and payroll overhead.</p><div class="formula">Eligible employees × adoption × AI-suitable hours × productivity gain × productive reuse × working weeks × calculated hourly employee cost − AI costs</div><div class="note">This is a planning estimate, not a guarantee. Results depend on adoption, training, workflow design, data quality, governance, and whether saved time is redirected to productive work.</div></div>
+<div class="card"><h2>Benchmarks used</h2><p><strong>15% productivity starting point:</strong> A field study of 5,172 customer-support agents found an average 15% improvement with generative AI assistance.</p><p><strong>30% overhead estimate:</strong> A practical default for benefits, payroll taxes, insurance, and related employment costs. Users can change or remove it.</p><p><a href="https://arxiv.org/abs/2304.11771" target="_blank" rel="noopener">Generative AI at Work</a><br><a href="https://www.bls.gov/news.release/ecec.toc.htm" target="_blank" rel="noopener">BLS Employer Costs for Employee Compensation</a></p></div>
+</section>
+</main>
+<script>
+const ids=['employees','eligiblePercent','adoptionPercent','annualSalary','benefitsOverhead','aiTaskHours','productivityGain','captureRate','workingWeeks','monthlyLicense','annualProgramCost'];
+const e=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+const defaults={employees:50,eligiblePercent:70,adoptionPercent:70,annualSalary:65000,benefitsOverhead:30,aiTaskHours:8,productivityGain:15,captureRate:75,workingWeeks:48,monthlyLicense:30,annualProgramCost:5000};
+const presets={conservative:{adoptionPercent:45,aiTaskHours:5,productivityGain:10,captureRate:60},expected:{adoptionPercent:70,aiTaskHours:8,productivityGain:15,captureRate:75},strong:{adoptionPercent:85,aiTaskHours:10,productivityGain:25,captureRate:85}};
+const out={netSavings:document.getElementById('netSavings'),activeUsers:document.getElementById('activeUsers'),hoursRecovered:document.getElementById('hoursRecovered'),grossValue:document.getElementById('grossValue'),totalCost:document.getElementById('totalCost'),monthlyValue:document.getElementById('monthlyValue'),roi:document.getElementById('roi')};
+function n(id){const v=parseFloat(e[id].value);return Number.isFinite(v)?Math.max(v,0):0}function money(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v||0)}function num(v,d=0){return new Intl.NumberFormat('en-US',{maximumFractionDigits:d}).format(v||0)}
+function calc(){const active=n('employees')*(n('eligiblePercent')/100)*(n('adoptionPercent')/100);const hourly=(n('annualSalary')*(1+n('benefitsOverhead')/100))/2080;const hours=active*n('aiTaskHours')*(n('productivityGain')/100)*(n('captureRate')/100)*n('workingWeeks');const gross=hours*hourly;const costs=active*n('monthlyLicense')*12+n('annualProgramCost');const net=gross-costs;const roi=costs>0?(net/costs)*100:0;out.activeUsers.textContent=num(active,1);out.hoursRecovered.textContent=num(hours);out.grossValue.textContent=money(gross);out.totalCost.textContent=money(costs);out.netSavings.textContent=money(net);out.monthlyValue.textContent=money(net/12);out.roi.textContent=num(roi)+'%'}
+ids.forEach(id=>e[id].addEventListener('input',calc));document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{Object.entries(presets[b.dataset.preset]).forEach(([k,v])=>e[k].value=v);calc()}));document.getElementById('reset').addEventListener('click',()=>{Object.entries(defaults).forEach(([k,v])=>e[k].value=v);calc()});calc();
+</script>
+</body>
+</html>
